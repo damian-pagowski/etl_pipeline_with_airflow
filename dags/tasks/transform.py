@@ -71,12 +71,11 @@ def analyze_vader_sentiment(merged_data):
     analyzer = SentimentIntensityAnalyzer()
     analyzed_records = []
     
-    
-    RELEVANT_KEYWORDS = [
-        'gold', 'silver', 'commodity', 'market', 'price', 'trade', 'inflation', 
-        'tariff', 'bank', 'fed', 'reserve', 'economy', 'economic', 'dollar', 
-        'currency', 'oil', 'stocks', 'crisis', 'sanction', 'war', 'deal', 'supply'
-    ]
+    # RELEVANT_KEYWORDS = [
+    #     'gold', 'silver', 'commodity', 'market', 'price', 'trade', 'inflation', 
+    #     'tariff', 'bank', 'fed', 'reserve', 'economy', 'economic', 'dollar', 
+    #     'currency', 'oil', 'stocks', 'crisis', 'sanction', 'war', 'deal', 'supply'
+    # ]
     
     for row in merged_data:
         headline = row['headline']
@@ -88,19 +87,26 @@ def analyze_vader_sentiment(merged_data):
         if not clean_headline or len(clean_headline) < 5:
             continue
         headline_lower = clean_headline.lower()
-        is_relevant = any(keyword in headline_lower for keyword in RELEVANT_KEYWORDS)
-        if not is_relevant:
-            continue
+        # is_relevant = any(keyword in headline_lower for keyword in RELEVANT_KEYWORDS)
+        # if not is_relevant:
+        #     continue
             
         scores = analyzer.polarity_scores(clean_headline)
         compound_score = scores['compound']
         
+        clean_price = float(row['gold_close_price'])
+        clean_volume = int(row['gold_volume'])
+        clean_sentiment = float(compound_score)
+        
         analyzed_records.append({
             'date': row['date'],
             'headline': clean_headline,
-            'gold_close_price': row['gold_close_price'],
-            'gold_volume': row['gold_volume'],
-            'sentiment_score': compound_score,
+            # 'gold_close_price': row['gold_close_price'],
+            'gold_close_price': clean_price,
+            # 'gold_volume': row['gold_volume'],
+            'gold_volume': clean_volume,
+            # 'sentiment_score': compound_score,
+            'sentiment_score': clean_sentiment,
             'sentiment_label': 'positive' if compound_score >= 0.05 else ('negative' if compound_score <= -0.05 else 'neutral')
         })
         
