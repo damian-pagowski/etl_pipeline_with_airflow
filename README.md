@@ -39,3 +39,7 @@ The target PostgreSQL table `gold_sentiment_analysis` contains the following str
 - sentiment_score (NUMERIC): The VADER compound score between -1.0 and 1.0.
 - sentiment_label (VARCHAR): Text category representing positive, negative, or neutral tone.
 - inserted_at (TIMESTAMP): The automatic ingestion record tracking time.
+
+## Author
+
+- Damian Pagowski
