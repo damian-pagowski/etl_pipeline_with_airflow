@@ -52,5 +52,5 @@ def scrape_wikipedia_events(year: int) -> list:
             except Exception as e:
                 print(f"Error scraping {month} {day}: {e}")
                 continue
-
+    print(f"Scraped {len(records)} news headers.")           
     return records
