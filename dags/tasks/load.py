@@ -1,5 +1,8 @@
 import psycopg2
 from psycopg2.extras import execute_values
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def load_data_to_postgres(analyzed_records):
     """
@@ -7,14 +10,14 @@ def load_data_to_postgres(analyzed_records):
     """
     print(f"Starting data Load: {len(analyzed_records)} records...")
     
-    # database configuration
     db_credentials = {
-        "host": "localhost",
-        "dbname": "damian",
-        "user": "postgres",
-        "port": 5432,
+        "host": os.getenv("DB_HOST"),
+        "dbname": os.getenv("DB_NAME"),
+        "user": os.getenv("DB_USER"),
+        "port": int(os.getenv("DB_PORT", 5432)),
         "connect_timeout": 5  
     }
+        
     
     try:
         conn = psycopg2.connect(**db_credentials)

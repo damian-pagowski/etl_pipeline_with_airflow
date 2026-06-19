@@ -1,15 +1,19 @@
 import psycopg2
-import sys
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def verify_database_connection():
     """
     Attempts to connect to the Postgre to verify credentials   
     """    
+    
     db_credentials = {
-        "host": "localhost",
-        "dbname": "damian",
-        "user": "postgres",
-        "port": 5432,
+        "host": os.getenv("DB_HOST"),
+        "dbname": os.getenv("DB_NAME"),
+        "user": os.getenv("DB_USER"),
+        "port": int(os.getenv("DB_PORT", 5432)),
         "connect_timeout": 5  
     }
     
