@@ -10,14 +10,22 @@ def load_data_to_postgres(analyzed_records):
     """
     print(f"Starting data Load: {len(analyzed_records)} records...")
     
+    # db_credentials = {
+    #     "host": os.getenv("DB_HOST"),
+    #     "dbname": os.getenv("DB_NAME"),
+    #     "user": os.getenv("DB_USER"),
+    #     "port": int(os.getenv("DB_PORT", 5432)),
+    #     "connect_timeout": 5  
+    # }
+        
     db_credentials = {
         "host": os.getenv("DB_HOST"),
         "dbname": os.getenv("DB_NAME"),
         "user": os.getenv("DB_USER"),
         "port": int(os.getenv("DB_PORT", 5432)),
-        "connect_timeout": 5  
-    }
-        
+        "password": os.getenv("DB_PASSWORD"),
+        "connect_timeout": 5
+    }    
     
     try:
         conn = psycopg2.connect(**db_credentials)

@@ -1,14 +1,10 @@
-import numpy as np
-import nltk
 import re
 
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-
-# Ensure the VADER lexicon is downloaded
-try:
-    nltk.data.find('sentiment/vader_lexicon.zip')
-except LookupError:
-    nltk.download('vader_lexicon', quiet=True)
+# # Ensure the VADER lexicon is downloaded
+# try:
+#     nltk.data.find('sentiment/vader_lexicon.zip')
+# except LookupError:
+#     nltk.download('vader_lexicon', quiet=True)
     
 def merge_datasets(news_data, price_data):
     """
@@ -63,10 +59,20 @@ def merge_datasets(news_data, price_data):
     return combined_records
 
 def analyze_vader_sentiment(merged_data):
+    import nltk
+    nltk.data.path.append('/tmp/nltk_data')
+    try:
+        nltk.data.find('sentiment/vader_lexicon.zip')
+    except LookupError:
+        nltk.download('vader_lexicon', download_dir='/tmp/nltk_data', quiet=True)
+    from nltk.sentiment.vader import SentimentIntensityAnalyzer
+    
     """
     A separate, dedicated function that accepts the merged dataset,
     calculates VADER sentiment metrics, and structures the final rows.
     """
+
+    
     print(f"Starting Sentiment Analysis Task: Processing {len(merged_data)} rows.")
     analyzer = SentimentIntensityAnalyzer()
     analyzed_records = []
@@ -113,7 +119,8 @@ def analyze_vader_sentiment(merged_data):
     print(f"Sentiment Analysis Task completed. Enriched {len(analyzed_records)} rows.")
     return analyzed_records
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
+    import numpy as np
     news = [{'date': '2025-01-01', 'headline': 'Poland takes over the Presidency of the Council of the European Union , after the Hungarian presidency . [ 2 ] [ 3 ]'},
             {'date': '2025-01-01', 'headline': 'The first versions of the Popeye and Tintin characters have entered the Public domain .'},
             {'date': '2025-01-01', 'headline': 'Bulgaria and Romania completed the process of joining the Schengen Area , lifting land border controls. [ 4 ]'},

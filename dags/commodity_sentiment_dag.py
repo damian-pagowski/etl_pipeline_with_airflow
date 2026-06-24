@@ -1,9 +1,10 @@
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__)))
+from airflow.sdk import DAG, task
 
-from airflow.models.dag import DAG
-from airflow.decorators import task
+# from airflow.models.dag import DAG
+# from airflow.decorators import task
 from datetime import datetime
 
 from tasks.extract import scrape_wikipedia_events
